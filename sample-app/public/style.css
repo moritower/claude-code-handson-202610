@@ -1,0 +1,76 @@
+* { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, "Hiragino Sans", "Yu Gothic", sans-serif;
+  margin: 0;
+  color: #222;
+  background: #f5f4f8;
+}
+
+header {
+  background: #2b2540;
+  color: #fff;
+  padding: 24px 20px;
+}
+header h1 { margin: 0 0 4px; font-size: 20px; }
+header .sub { margin: 0; opacity: 0.8; font-size: 14px; }
+
+main {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+}
+@media (max-width: 720px) {
+  main { grid-template-columns: 1fr; }
+}
+
+h2 { font-size: 16px; border-left: 4px solid #6c5ce7; padding-left: 8px; }
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.card h3 { margin: 0 0 8px; font-size: 16px; }
+.card p { margin: 2px 0; font-size: 14px; color: #444; }
+.card.soldout { opacity: 0.6; }
+.seats { font-weight: bold; }
+.badge {
+  background: #e74c3c;
+  color: #fff;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 12px;
+  margin-left: 6px;
+}
+
+form { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+label { display: block; margin-bottom: 12px; font-size: 14px; }
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background: #6c5ce7;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+button:hover { background: #5a4bd1; }
+
+#message { margin-top: 10px; font-size: 14px; }
+#message.ok { color: #2e7d32; }
+#message.ng { color: #c62828; }

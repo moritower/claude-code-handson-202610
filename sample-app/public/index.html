@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>マーダーミステリー公演 予約システム</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🔎 マーダーミステリー公演 予約システム</h1>
+      <p class="sub">気になる公演を選んで予約しましょう</p>
+    </header>
+
+    <main>
+      <section id="performances">
+        <h2>公演一覧</h2>
+        <div id="performance-list">読み込み中...</div>
+      </section>
+
+      <section id="booking">
+        <h2>予約する</h2>
+        <form id="booking-form">
+          <label>
+            公演
+            <select id="performanceId" required></select>
+          </label>
+          <label>
+            お名前
+            <input type="text" id="name" required placeholder="例: 探偵 花子" />
+          </label>
+          <label>
+            人数
+            <input type="number" id="partySize" min="1" value="1" required />
+          </label>
+          <button type="submit">予約する</button>
+        </form>
+        <p id="message"></p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
