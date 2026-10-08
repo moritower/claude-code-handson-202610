@@ -2,6 +2,7 @@
 
 Claude Code を起動して、基本操作に慣れるパートです。
 「難しいことは後回し」でOK。まずは動かしてみましょう。
+この手順は Mac（macOS）向けです。
 
 ## 0-1. 事前チェック（3分）
 
@@ -16,10 +17,30 @@ npm -v
 
 ## 0-2. Claude Code のインストールとログイン（7分）
 
+npm のグローバルインストールは、インストール先の権限によって `EACCES`（書き込み権限エラー）になることがあります。ここでは [公式推奨のネイティブインストール](https://code.claude.com/docs/en/setup#install-claude-code) を使います。`sudo npm install -g` で回避しないでください。
+
 ```bash
-npm install -g @anthropic-ai/claude-code   # インストール（初回のみ）
-claude                                      # 起動
+curl -fsSL https://claude.ai/install.sh | bash   # インストール（初回のみ）
 ```
+
+インストールが終わったら、新しいターミナルを開いて確認し、起動します。
+
+```bash
+claude --version   # バージョンが表示されればOK
+claude             # 起動
+```
+
+`claude: command not found` が出た場合は、次を実行して再度確認します。
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+claude --version
+claude
+```
+
+この PATH 設定は現在のターミナルだけに有効です。次回以降も使えるように、同じ `export` 行を macOS 標準のシェル zsh の設定ファイル `~/.zshrc` に追加してください。
+
+権限エラーが続く場合や、`claude` の起動時に権限エラーが出る場合は、エラー全文（特に `EACCES` / `Permission denied` と対象のパス）を講師に見せてください。ディレクトリの権限を一括で変更しないでください。
 
 初回は画面の案内にそってログイン（ブラウザが開きます）してください。
 `>` のような入力欄が出たら準備完了です。
