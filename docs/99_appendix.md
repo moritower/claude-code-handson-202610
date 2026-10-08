@@ -46,9 +46,23 @@
 - 自分の身近な「毎回やる作業」を1つ、コマンドかフックにしてみる
 - `/help` から公式の機能を少しずつ探検する
 
-### 本格的に AIDLC をやるなら（発展）
+### この教材の `SPEC.md` / `DESIGN.md` は簡易版です
 
-このコースは広い意味の AIDLC を「体験」する入門です。
+本コースの `SPEC.md`（簡易仕様書）と `DESIGN.md`（設計メモ）は、
+**初心者が「仕様を先に書く」骨格だけを体験するための独自の簡易版**です。
+Claude Code の標準ではありません（自動で読まれる決まったファイルは `CLAUDE.md` のみ）。
+
+実際の「**仕様駆動開発（spec-driven development）**」ツールは、仕様を
+複数の構造化ファイルに分けて扱います。本格的にやるなら次が参考になります。
+
+- **GitHub Spec Kit**（CLI: `Specify`）… `constitution.md` / `spec.md` /
+  `plan.md` / `tasks.md` の4点。ワークフローは Specify → Plan → Tasks →
+  Implement → Converge。**Claude Code を含む30以上のエージェントに対応**。
+- **AWS Kiro**（AIエディタ）… `requirements.md`（**EARS記法**で要件）/
+  `design.md`（アーキ・シーケンス図）/ `tasks.md`（実装計画）の3点。
+
+### 本格的に AIDLC をやるなら
+
 チームで本格的に取り入れるなら、**AWS が提唱する方法論「AI-DLC」**と、
 その**オープンソース実装フレームワーク `awslabs/aidlc-workflows`** が参考になります。
 
@@ -56,8 +70,14 @@
 - `aidlc-workflows` は **Claude Code に対応**し、`/aidlc` コマンドで
   承認ゲート付きのワークフローを回せる
 
-参考リンク:
+### 参考リンク
 
+仕様駆動開発:
+- [GitHub Spec Kit（GitHub）](https://github.com/github/spec-kit)
+- [Spec Kit Documentation](https://github.github.com/spec-kit/)
+- [Specs — Kiro Docs](https://kiro.dev/docs/specs/)
+
+AIDLC / AI-DLC:
 - [AI-Driven Development Life Cycle（AWS DevOps Blog）](https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle/)
 - [Open-Sourcing Adaptive Workflows for AI-DLC（AWS DevOps Blog）](https://aws.amazon.com/blogs/devops/open-sourcing-adaptive-workflows-for-ai-driven-development-life-cycle-ai-dlc/)
 - [awslabs/aidlc-workflows（GitHub）](https://github.com/awslabs/aidlc-workflows)
