@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "npm test を実行中...",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.js) ;; *) exit 0 ;; esac; cd \"/Users/ccoe/work/20260928_test_claude_code/aidlc-handson/sample-app\" || exit 0; out=$(npm test 2>&1); code=$?; if [ $code -ne 0 ]; then printf '%s' \"$out\" | jq -Rs '{decision:\"block\", reason:(\"npm test が失敗しました。\\n\"+.), systemMessage:\"❌ npm test 失敗（詳細は reason 参照）\"}'; else printf '%s' '{\"systemMessage\":\"✅ npm test 通過\",\"suppressOutput\":true}'; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

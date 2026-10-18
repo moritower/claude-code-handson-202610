@@ -41,6 +41,42 @@ export function canBook(performance, bookings, partySize) {
   return { ok: true };
 }
 
+/**
+ * 日時（または日付文字列）を JST の年月日の数値 YYYYMMDD に変換する。
+ * 例: "2026-10-18T18:30" → 20261018
+ * - 文字列（TZ表記なし）は JST の暦日として先頭 10 文字をそのまま使う。
+ * - Date（現在時刻など）は UTC+9 に補正してから JST の暦日を取り出す。
+ */
+function toJstDateNumber(value) {
+  if (typeof value === "string") {
+    const [y, m, d] = value.slice(0, 10).split("-").map(Number);
+    return y * 10000 + m * 100 + d;
+  }
+  // Date を JST(UTC+9) に補正し、UTC 系メソッドで暦日を読む
+  const jst = new Date(value.getTime() + 9 * 60 * 60 * 1000);
+  return jst.getUTCFullYear() * 10000 + (jst.getUTCMonth() + 1) * 100 + jst.getUTCDate();
+}
+
+/**
+ * キャンセルできるかどうかを判定する純粋関数。
+ * 予約の存在確認（404）は store/HTTP 層の責務なので、ここには含めない。
+ * 判定順: ① キャンセル済み → ② 期限切れ（公演当日以降） → OK
+ * @param {object} performance 対象公演
+ * @param {object} booking 対象予約
+ * @param {Date} now 現在時刻（テストで固定値を注入できるよう引数で受け取る）
+ */
+export function canCancel(performance, booking, now) {
+  if (booking.status === "cancelled") {
+    return { ok: false, reason: "すでにキャンセル済みです" };
+  }
+  // 公演日の前日末（JST）まで可。公演日の 00:00(JST) 以降は不可。
+  // 文字列の辞書順ではなく、JST の年月日の数値で比較する。
+  if (toJstDateNumber(now) >= toJstDateNumber(performance.datetime)) {
+    return { ok: false, reason: "公演前日までにキャンセルしてください" };
+  }
+  return { ok: true };
+}
+
 // ─────────────────────────────────────────────────────────────
 // 🚧 ここから下は「演習で Claude Code と一緒に実装する」部分です。
 //    最初はコメントアウトされています。フェーズ1〜2 で育てていきます。

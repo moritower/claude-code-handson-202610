@@ -35,6 +35,16 @@ export function seed() {
       minPlayers: 4,
       price: 3000,
     },
+    {
+      // キャンセル動作の確認用：公演日が未来（前日までに2日以上の余裕あり）
+      id: "p4",
+      title: "深紅の仮面舞踏会",
+      datetime: "2026-10-25T19:00",
+      venue: "池袋シアター D",
+      capacity: 6,
+      minPlayers: 4,
+      price: 3800,
+    },
   ];
   bookings = [
     { id: "b_demo", performanceId: "p1", name: "サンプル太郎", partySize: 2, status: "confirmed", createdAt: new Date().toISOString() },
@@ -67,7 +77,17 @@ export function addBooking({ performanceId, name, partySize, status }) {
   return booking;
 }
 
-// 【演習】キャンセル処理（status を "cancelled" にする）をここに追加します。
-// export function cancelBooking(id) { ... }
+/**
+ * 予約をキャンセルする（status を "cancelled" に書き換える）。
+ * 見つからなければ null を返す（HTTP 層で 404 に変換する）。
+ * 検索→更新を同一同期処理で完結させ、途中に await を挟まない
+ * （二重取り消しで席が二重に戻るのを防ぐ）。
+ */
+export function cancelBooking(id) {
+  const booking = bookings.find((b) => b.id === id);
+  if (!booking) return null;
+  booking.status = "cancelled";
+  return booking;
+}
 
 seed();

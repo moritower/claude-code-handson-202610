@@ -5,8 +5,8 @@
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getPerformances, getPerformance, getBookings, addBooking } from "./src/store.js";
-import { remainingSeats, isSoldOut, canBook } from "./src/booking.js";
+import { getPerformances, getPerformance, getBookings, addBooking, cancelBooking } from "./src/store.js";
+import { remainingSeats, isSoldOut, canBook, canCancel } from "./src/booking.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -50,7 +50,23 @@ app.get("/api/bookings", (req, res) => {
   res.json(getBookings());
 });
 
-// 【演習】予約キャンセルのエンドポイント（DELETE /api/bookings/:id）をここに追加します。
+// 予約キャンセル（判定順: ①存在(404) → ②キャンセル済み/期限(400) → 更新→200）
+app.delete("/api/bookings/:id", (req, res) => {
+  const { id } = req.params;
+  const booking = getBookings().find((b) => b.id === id);
+  if (!booking) {
+    return res.status(404).json({ error: "予約が見つかりません" });
+  }
+
+  const performance = getPerformance(booking.performanceId);
+  const check = canCancel(performance, booking, new Date());
+  if (!check.ok) {
+    return res.status(400).json({ error: check.reason });
+  }
+
+  const cancelled = cancelBooking(id);
+  res.json(cancelled);
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

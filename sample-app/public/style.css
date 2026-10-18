@@ -74,3 +74,19 @@ button:hover { background: #5a4bd1; }
 #message { margin-top: 10px; font-size: 14px; }
 #message.ok { color: #2e7d32; }
 #message.ng { color: #c62828; }
+
+/* 予約一覧（管理用）：2カラムの下に全幅で表示 */
+#bookings { grid-column: 1 / -1; }
+.card.cancelled { opacity: 0.55; }
+.cancel-btn {
+  width: auto;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: #e74c3c;
+  font-size: 13px;
+}
+.cancel-btn:hover { background: #c0392b; }
+
+#cancel-message { margin-top: 10px; font-size: 14px; }
+#cancel-message.ok { color: #2e7d32; }
+#cancel-message.ng { color: #c62828; }
